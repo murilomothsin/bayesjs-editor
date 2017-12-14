@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import NodeGeneric from '../NodeGeneric';
 import NodeState from '../NodeState';
+import SvgText from '../SvgText';
 
 const SuperNode = (props) => {
   const { nodes } = props;
@@ -10,19 +11,13 @@ const SuperNode = (props) => {
     <NodeGeneric
       {...props}
     >
-      <foreignObject x="5" y="21" height="15" width="75">
-        <p
-          title={title}
-          style={{
-            margin: 0,
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {title}
-        </p>
-      </foreignObject>
+      <SvgText 
+        x="5" 
+        y="37" 
+        height="15"
+        width="75"
+        title={title}
+      />
     </NodeGeneric>
   );
 };

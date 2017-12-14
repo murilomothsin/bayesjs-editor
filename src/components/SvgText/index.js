@@ -1,8 +1,5 @@
 import React, { PropTypes } from 'react';
-import { 
-  isUndefined,
-  find,
-} from 'lodash';
+import { isUndefined } from 'lodash';
 import * as d3 from 'd3';
 
 class SvgText extends React.PureComponent {

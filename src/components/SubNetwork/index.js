@@ -5,6 +5,7 @@ import Arrow from '../Arrow';
 import Node from '../Node';
 import NodeGeneric from '../NodeGeneric';
 import { find } from 'lodash';
+import SvgText from '../SvgText';
 
 class SubNetwork extends Component {
   constructor(props) {
@@ -54,8 +55,8 @@ class SubNetwork extends Component {
 
       // Without it, sometimes the mouse is over the adding arrow
       // It needs to be over the node to be added
-      to.x += from.x < to.x ? -3 : 3;
-      to.y += from.y < to.y ? -3 : 3;
+      to.x += from.x < to.x ? -5 : 5;
+      to.y += from.y < to.y ? -5 : 5;
 
       this.setState({
         addingChildArrow: { from, to },
@@ -105,14 +106,17 @@ class SubNetwork extends Component {
 
   renderNode = (node, props) => {
     const {
-      connectingNode, network, inferenceResults, networkColor,
+      connectingNode, 
+      network, 
+      inferenceResults, 
+      networkColor,
     } = this.props;
     const key = `${network.name}-${node.id}`;
 
     if (connectingNode == node) {
       const { network } = connectingNode;
       const { name, color } = network;
-
+      
       return (
         <NodeGeneric
           key={`${key}-view`}
@@ -127,19 +131,13 @@ class SubNetwork extends Component {
           canMove
           opacity="0.3"
         >
-          <foreignObject x="5" y="21" height="15" width="150">
-            <p
-              title={connectingNode.id}
-              style={{
-                margin: 0,
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {connectingNode.id}
-            </p>
-          </foreignObject>
+          <SvgText 
+            x="5" 
+            y="37" 
+            height="15" 
+            width="150"
+            title={connectingNode.id}
+          />
         </NodeGeneric>
       );
     }
