@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { changeNetworkProperty, NETWORK_KINDS } from '../../actions';
 import { getNetwork, getNetworkKind } from '../../selectors';
+import { isUndefined } from 'lodash';
 import styles from './styles.css';
 
 class PropertiesNetwork extends Component {
@@ -113,7 +114,7 @@ class PropertiesNetwork extends Component {
             <input
               id="inferenceEnabled"
               type="checkbox"
-              checked={network.inferenceEnabled === undefined ? true : network.inferenceEnabled}
+              checked={isUndefined(network.inferenceEnabled) ? true : network.inferenceEnabled}
               onChange={this.onChangeCheck}
             />
             Ativar Inferência
