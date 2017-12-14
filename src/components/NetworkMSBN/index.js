@@ -10,6 +10,7 @@ import Modal from '../Modal';
 import LinkagesModal from '../LinkagesModal';
 import { v4 } from 'uuid';
 import { hasCycles, mergeNetworks } from './helpers';
+import { find } from 'lodash';
 
 import {
   getNetwork,
@@ -233,7 +234,7 @@ class NetworkMSBN extends Component {
     
     if ([8, 46].indexOf(key) !== -1 && network.selectedNodes.length > 0 && document.activeElement.tagName === "BODY") {
       network.selectedNodes.map((nodeId) => {
-        const node = nodes.find(({ id }) => id == nodeId);
+        const node = find(nodes, ({ id }) => id == nodeId);
 
         this.onRemoveNode(node);
       });
@@ -250,7 +251,7 @@ class NetworkMSBN extends Component {
       const { subnetworks } = this.props;
 
       this.setState({
-        connectSubnetwork: subnetworks.find(s => s.id == idTo),
+        connectSubnetwork: find(subnetworks, s => s.id == idTo),
       });
     }
   };
@@ -596,7 +597,7 @@ class NetworkMSBN extends Component {
   getArrows = () => {
     const { linkages, nodes, linkagesByTwoNode } = this.props;
     const groups = linkagesByTwoNode;
-    const get = (networkId => nodes.find(n => n.id == networkId));
+    const get = (networkId => find(nodes, n => n.id == networkId));
 
     return groups.map(info => ({
       from: get(info.networkId1),

@@ -6,6 +6,7 @@ import Arrow from '../Arrow';
 import AddNodeModal from '../AddNodeModal';
 import EditStatesModal from '../EditStatesModal';
 import EditCptModal from '../EditCptModal';
+import { find } from 'lodash';
 
 import {
   getNetwork,
@@ -204,7 +205,7 @@ class NetworkBN extends Component {
 
     nodes.forEach((node) => {
       node.parents.forEach((parentId) => {
-        const parent = nodes.find(x => x.id === parentId);
+        const parent = find(nodes, x => x.id === parentId);
 
         arrows.push({
           from: parent,

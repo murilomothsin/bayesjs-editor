@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { addNode, infer } from 'bayesjs';
-
+import { find } from 'lodash';
 import { NETWORK_KINDS } from '../actions';
 import {
   combNodesAndBeliefs,
@@ -53,7 +53,7 @@ export const getSelectedNode = createSelector(
       return null;
     }
 
-    return nodes.find(x => x.id === network.selectedNodes[0]);
+    return find(nodes, x => x.id === network.selectedNodes[0]);
   },
 );
 
@@ -65,7 +65,7 @@ export const getSelectedSubnetwork = createSelector(
       return null;
     }
 
-    return subnetworks.find(sub => sub.id === network.selectedNodes[0]);
+    return find(subnetworks, sub => sub.id === network.selectedNodes[0]);
   },
 );
 

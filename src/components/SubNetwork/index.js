@@ -4,6 +4,7 @@ import Network, { ContextMenuType } from '../Network';
 import Arrow from '../Arrow';
 import Node from '../Node';
 import NodeGeneric from '../NodeGeneric';
+import { find } from 'lodash';
 
 class SubNetwork extends Component {
   constructor(props) {
@@ -85,7 +86,7 @@ class SubNetwork extends Component {
   getLinkedFromNode = ({ id }) => {
     const linkedNodes = this.props.linkedNodes || [];
 
-    return linkedNodes.find(({ nodeId }) => nodeId == id);
+    return find(linkedNodes, ({ nodeId }) => nodeId == id);
   };
 
   getLinkTitle = ({ connections }) => connections.reduce((p, c) => {
@@ -195,7 +196,7 @@ class SubNetwork extends Component {
 
     nodes.forEach((node) => {
       node.parents.forEach((parentId) => {
-        const parent = nodes.find(x => x.id === parentId);
+        const parent = find(nodes, x => x.id === parentId);
 
         arrows.push({
           from: parent,

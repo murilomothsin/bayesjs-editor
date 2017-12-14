@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import RenderIntoBody from '../RenderIntoBody';
 import styles from './styles.css';
+import { isFunction } from 'lodash';
 
 class ContextMenu extends Component {
   state = {
@@ -84,7 +85,7 @@ class ContextMenu extends Component {
       if (visible !== undefined) {
         if (typeof visible === 'boolean') {
           return visible;
-        } else if (typeof visible === 'function') {
+        } else if (isFunction(visible)) {
           return visible(this.contextItem);
         }
       }

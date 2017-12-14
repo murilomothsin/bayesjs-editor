@@ -10,6 +10,7 @@ import {
   CHANGE_NODE_CPT,
   CHANGE_NODE_DESCRIPTION,
 } from '../actions';
+import { find } from 'lodash';
 
 const arrayEqual = (arr1, arr2) => {
   if (arr1 === arr2) {
@@ -65,7 +66,7 @@ const changeParentStates = (node, parentId, nextParentStates, nodes) => {
     const newWhenKeys = Object.keys(when)
       .sort((a, b) => a.localeCompare(b));
 
-    const oldRow = node.cpt.find((row) => {
+    const oldRow = find(node.cpt, (row) => {
       const oldWhenKeys = Object.keys(row.when)
         .sort((a, b) => a.localeCompare(b));
 
@@ -174,7 +175,7 @@ const hasCycles = (nodes, nodeToStartFrom, nodeToFindId) => {
       return true;
     }
 
-    const parent = nodes.find(x => x.id === parentId);
+    const parent = find(nodes, x => x.id === parentId);
 
     if (hasCycles(nodes, parent, nodeToFindId)) {
       return true;
@@ -195,7 +196,7 @@ const addParent = (node, parentId, nodes) => {
     return node;
   }
 
-  const parent = nodes.find(x => x.id === parentId);
+  const parent = find(nodes, x => x.id === parentId);
 
   // Don't add if adds cycles
   if (hasCycles(nodes, parent, node.id)) {
@@ -231,7 +232,7 @@ const addParent = (node, parentId, nodes) => {
 
 const removeParent = (node, parentId, nodes) => {
   const newParents = node.parents.filter(x => x !== parentId);
-  const parent = nodes.find(x => x.id === parentId);
+  const parent = find(nodes, x => x.id === parentId);
 
   let cpt = null;
 

@@ -1,4 +1,7 @@
-import isEqual from 'lodash/isequal';
+import { 
+  isEqual,
+  find,
+} from 'lodash';
 
 const cliquesCache = new WeakMap();
 
@@ -15,7 +18,7 @@ export function infer(network, nodes, given) {
   // TODO: considerar P(A,B,C), por enquanto só P(A)
   const nodeToInfer = nodesToInfer[0];
 
-  const clique = cliques.find(x => x.clique.some(y => y === nodeToInfer));
+  const clique = find(cliques, x => x.clique.some(y => y === nodeToInfer));
 
   const result = clique.potentials
     .filter(x => x.when[nodeToInfer] === nodes[nodeToInfer])
@@ -91,9 +94,9 @@ const globalPropagation = (network, junctionTree, cliques, sepSets) => {
     }
 
     if (parentId !== null) {
-      const sepSet = sepSets.find(x => (x.ca === parentId && x.cb === id) || (x.ca === id && x.cb === parentId)).sharedNodes;
+      const sepSet = find(sepSets, x => (x.ca === parentId && x.cb === id) || (x.ca === id && x.cb === parentId)).sharedNodes;
 
-      const potentials = cliques.find(x => x.id === id).potentials;
+      const potentials = find(cliques, x => x.id === id).potentials;
 
       const message = buildCombinations(network, sepSet)
         .map(x => ({ when: x, then: 0 }));
@@ -105,7 +108,7 @@ const globalPropagation = (network, junctionTree, cliques, sepSets) => {
           .reduce((acc, x) => acc + x);
       }
 
-      const parent = cliques.find(x => x.id === parentId);
+      const parent = find(cliques, x => x.id === parentId);
 
       parent.oldPotentials = parent.potentials.map(x => ({ when: x.when, then: x.then }));
 
@@ -122,7 +125,7 @@ const globalPropagation = (network, junctionTree, cliques, sepSets) => {
   const distributeEvidence = (id) => {
     mark(id);
 
-    const clique = cliques.find(x => x.id === id);
+    const clique = find(cliques, x => x.id === id);
     const potentials = clique.oldPotentials;
 
     delete clique.oldPotentials;
@@ -131,7 +134,7 @@ const globalPropagation = (network, junctionTree, cliques, sepSets) => {
       .filter(x => !isMarked(x));
 
     for (const neighborId of neighbors) {
-      const sepSet = sepSets.find(x => (x.ca === neighborId && x.cb === id) || (x.ca === id && x.cb === neighborId)).sharedNodes;
+      const sepSet = find(sepSets, x => (x.ca === neighborId && x.cb === id) || (x.ca === id && x.cb === neighborId)).sharedNodes;
 
       const message = buildCombinations(network, sepSet)
         .map(x => ({ when: x, then: 0 }));
@@ -143,7 +146,7 @@ const globalPropagation = (network, junctionTree, cliques, sepSets) => {
           .reduce((acc, x) => acc + x);
       }
 
-      const neighbor = cliques.find(x => x.id === neighborId);
+      const neighbor = find(cliques, x => x.id === neighborId);
 
       for (const row of message) {
         neighbor.potentials
@@ -198,7 +201,7 @@ const initializePotentials = (cliques, network) => {
           const when = network[factorId].parents
             .reduce((acc, x) => ({ ...acc, [x]: combination[x] }), {});
 
-          const cptRow = factor.cpt.find(x => isEqual(x.when, when));
+          const cptRow = find(factor.cpt, x => isEqual(x.when, when));
 
           value *= cptRow.then[combination[factorId]];
         } else {

@@ -1,5 +1,6 @@
 import { addNode, infer } from 'bayesjs';
 import { mergeNetworks, createKey, keyToNetworkAndNode, createMissingLinkages, junctionTreeInSubnetwork } from '../components/NetworkMSBN/helpers';
+import { find } from 'lodash';
 
 const weakMap = new WeakMap();
 
@@ -228,10 +229,10 @@ export const combLinkagesByTwoSubnetwork = (linkages) => {
   const groups = [];
 
   const findGroupsItem = (l1, l2) => {
-    const temp = groups.find(g => g.networkId1 == l1.networkId && g.networkId2 == l2.networkId);
+    const temp = find(groups, g => g.networkId1 == l1.networkId && g.networkId2 == l2.networkId);
 
     if (temp) return temp;
-    return groups.find(g => g.networkId1 == l2.networkId && g.networkId2 == l1.networkId);
+    return find(groups, g => g.networkId1 == l2.networkId && g.networkId2 == l1.networkId);
   };
 
   ids.forEach((id) => {

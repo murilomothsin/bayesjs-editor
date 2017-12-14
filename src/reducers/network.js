@@ -4,6 +4,7 @@ import positionsRed from './positions';
 import subnetworkRed from './subnetwork';
 import linkagesRed from './linkages';
 import { v4 } from 'uuid';
+import { find } from 'lodash';
 
 const ReducerNode = nodesRed;
 const ReducerPosition = positionsRed;
@@ -52,8 +53,7 @@ const setBelief = (state, action) => {
 
   if (subnetworkId) {
     const beliefsSubnet = beliefs[subnetworkId] || {};
-    const subnetwork = state.subnetworks
-      .find(s => s.id == subnetworkId);
+    const subnetwork = find(state.subnetworks, s => s.id == subnetworkId);
 
     beliefs[subnetworkId] = changeBelife(beliefsSubnet, action.payload.state, nodeId);
     subnetwork.beliefs = changeBelife(subnetwork.beliefs, action.payload.state, nodeId);

@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import { buildMoralGraph, buildTriangulatedGraph } from './junctionTree';
+import { find } from 'lodash';
 
 const weakMap = new WeakMap();
 
@@ -147,10 +148,13 @@ export const createSuperNodes = (nodes: INodeWithNetwork[], linkages: [ILinkageI
   const linkagesClone = linkages.slice();
   const superNodes: ISuperNode[] = [];
 
-  const findNode = ({ networkId, nodeId }: ILinkageItem) => nodes.find(n => n.id == nodeId && n.networkId == networkId);
+  const findNode = ({ networkId, nodeId }: ILinkageItem) => find(nodes, n => n.id == nodeId && n.networkId == networkId);
 
-  const find = (l: ILinkageItem) => superNodes
-    .find(({ originals }) => originals.some(({ networkId, id }) => l.networkId == networkId && l.nodeId == id));
+  const findSuperNode = (l: ILinkageItem) => 
+    find(
+      superNodes, 
+      ({ originals }) => originals.some(({ networkId, id }) => l.networkId == networkId && l.nodeId == id)
+    );
 
   const mergeParents = (superArray: ILinkageItem[][]): ILinkageItem[] => superArray.reduce((p, array) => {
     for (const item of array) {
@@ -217,10 +221,10 @@ export const createSuperNodes = (nodes: INodeWithNetwork[], linkages: [ILinkageI
   for (const linkage of linkagesClone) {
     const [l1, l2] = linkage;
 
-    let sNode = find(l1);
+    let sNode = findSuperNode(l1);
 
     if (sNode === undefined) {
-      sNode = find(l2);
+      sNode = findSuperNode(l2);
 
       if (sNode === undefined) {
         const temp = findNode(l1);
@@ -240,7 +244,7 @@ export const createSuperNodes = (nodes: INodeWithNetwork[], linkages: [ILinkageI
 
         sNode.originals.push(temp);
       }
-    } else if (find(l2) === undefined) {
+    } else if (findSuperNode(l2) === undefined) {
       // Add l2 no supernoda
       const temp = findNode(l2);
 
@@ -357,7 +361,7 @@ export const createIdentifier = (nodes: ISuperNode[]): IIdentifiers => {
 
   const findParentName = (parent: ILinkageItem): string => {
     for (const superNode of superNodes) {
-      const node = superNode.originals.find(original => original.id == parent.nodeId && original.networkId == parent.networkId);
+      const node = find(superNode.originals, original => original.id == parent.nodeId && original.networkId == parent.networkId);
 
       if (node) {
         return node.id;

@@ -5,6 +5,10 @@ import ContextMenu from '../ContextMenu';
 import AddNodeModal from '../AddNodeModal';
 import Arrows from '../Arrows';
 import { v4 } from 'uuid';
+import { 
+  isFunction,
+  find,
+} from 'lodash';
 
 export const ContextMenuType = {
   NODE: 'CONTEXT_MENU_NODE',
@@ -33,8 +37,8 @@ class Network extends Component {
 
     this.rectRefs = {};
     this.movingNode = null;
-    this.canChangeNodePostion = typeof this.props.changeNodePosition === 'function';
-    this.onMouseMoveProps = typeof this.props.onMouseMove === 'function' ? this.props.onMouseMove : () => {};
+    this.canChangeNodePostion = isFunction(this.props.changeNodePosition);
+    this.onMouseMoveProps = isFunction(this.props.onMouseMove) ? this.props.onMouseMove : () => {};
   }
 
   componentDidMount() {
@@ -123,8 +127,7 @@ class Network extends Component {
     const pointCountArray = [];
 
     const getPointCount = (point) => {
-      let pointCount = pointCountArray
-        .find(x => x.point.x === point.x && x.point.y === point.y);
+      let pointCount = find(pointCountArray, x => x.point.x === point.x && x.point.y === point.y);
 
       if (pointCount !== undefined) {
         pointCount.count++;
@@ -204,7 +207,7 @@ class Network extends Component {
     } = this.props;
 
     onSelectNodes([node.id]);
-    if (typeof onClickNode === 'function') {
+    if (isFunction(onClickNode)) {
       onClickNode(node, e);
     }
 
@@ -373,7 +376,7 @@ class Network extends Component {
   renderArrows = () => {
     const { onClickArrow, nodes, renderArrow } = this.props;
     const arrowsCalc = this.calculateArrows(nodes);
-    const clickIsFunc = onClickArrow === 'function';
+    const clickIsFunc = isFunction(onClickArrow);
     const arrows = arrowsCalc.map((a) => {
       const onMouseDown = e => this.handleArrowMouseDown(a, e);
       const uuid = v4();
@@ -400,7 +403,7 @@ class Network extends Component {
       const rectRef = setRef(node.id);
       const onMouseDown = e => this.handleNodeMouseDown(node, e);
       const onDoubleClick = (e) => {
-        if (typeof onDoubleClickNode === 'function') {
+        if (isFunction(onDoubleClickNode)) {
           onDoubleClickNode(node, e);
         }
       };

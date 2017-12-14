@@ -6,6 +6,7 @@ import Button from '../Button';
 import InputCpt from '../InputCpt';
 import styles from './styles.css';
 import float from 'float';
+import { find } from 'lodash';
 
 class EditCptModal extends Component {
   state = {
@@ -141,7 +142,7 @@ class EditCptModal extends Component {
     then[currentState] = valueFloat;
 
     if (twoStates) {
-      const state = states.find(state => state !== currentState);
+      const state = find(states, state => state !== currentState);
 
       then[state] = this.getRestFromValue(valueFloat);
     }
@@ -158,7 +159,7 @@ class EditCptModal extends Component {
     };
 
     if (twoStates) {
-      const state = states.find(state => state !== currentState);
+      const state = find(states, state => state !== currentState);
 
       newCpt[state] = this.getRestFromValue(valueFloat);
     }
