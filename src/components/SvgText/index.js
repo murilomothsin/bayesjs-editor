@@ -1,4 +1,9 @@
 import React, { PropTypes } from 'react';
+import { 
+  isUndefined,
+  find,
+} from 'lodash';
+import * as d3 from 'd3';
 
 class SvgText extends React.PureComponent {
   componentDidMount() {
@@ -8,22 +13,22 @@ class SvgText extends React.PureComponent {
     const widthInt = parseInt(width, 10);
 
     if (length > widthInt) {
-      this.wrap(widthInt, element);
+      this.wrap(widthInt, element, d3.select(element));
     }
   }
 
-  wrap(maxWidth, element) {
+  wrap(maxWidth, element, d3Element) {
     const textLength = element.getComputedTextLength();
-    const text = element.innerHTML.replace(/[.]{3}$/, '');
+    const text = d3Element.text().replace(/[.]{3}$/, '');
 
     if (textLength > maxWidth) {
-        const newText = text.slice(0, -1);
-        element.innerHTML = `${newText}...`;
-
-        this.wrap(maxWidth, element);
+        const newText = `${text.slice(0, -1)}...`;
+        
+        d3Element.text(newText);
+        this.wrap(maxWidth, element, d3Element);
     }
-} 
-
+  }
+  
   render() {
     const {
       x,

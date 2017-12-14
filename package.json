@@ -31,8 +31,10 @@
     "flow": "flow"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bayesjs": "^0.4.0-beta.5",
     "classnames": "^2.2.5",
+    "d3": "^4.12.0",
     "font-awesome": "^4.6.3",
     "normalize.css": "^7.0.0",
     "postcss-import": "^11.0.0",
