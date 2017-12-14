@@ -10,29 +10,10 @@ import {
   CHANGE_NODE_CPT,
   CHANGE_NODE_DESCRIPTION,
 } from '../actions';
-import { find } from 'lodash';
-
-const arrayEqual = (arr1, arr2) => {
-  if (arr1 === arr2) {
-    return true;
-  }
-
-  if (arr1 == null || arr2 == null) {
-    return false;
-  }
-
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      return false;
-    }
-  }
-
-  return true;
-};
+import { 
+  find, 
+  isEqual,
+} from 'lodash';
 
 const buildWhens = (nodes, whens, acc = {}) => {
   if (nodes.length === 0) {
@@ -70,7 +51,7 @@ const changeParentStates = (node, parentId, nextParentStates, nodes) => {
       const oldWhenKeys = Object.keys(row.when)
         .sort((a, b) => a.localeCompare(b));
 
-      if (!arrayEqual(newWhenKeys, oldWhenKeys)) {
+      if (!isEqual(newWhenKeys, oldWhenKeys)) {
         return false;
       }
 
