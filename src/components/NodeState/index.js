@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getInferenceEnabled } from '../../selectors';
+import SvgText from '../SvgText';
 
 const NodeState = ({
   belief,
@@ -24,20 +25,14 @@ const NodeState = ({
 
   return (
     <g>
-      <foreignObject x="5" y={21 + (18 * index)} height="15" width="75">
-        <p
-          title={state}
-          style={{
-            margin: 0,
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {state}
-        </p>
-      </foreignObject>
-
+      <SvgText 
+        x="5"
+        y={36 + (18 * index)} 
+        height="15" 
+        width="75"
+        title={state}
+      />
+      
       <rect
         x={155 - barWidth}
         y={24 + (18 * index)}

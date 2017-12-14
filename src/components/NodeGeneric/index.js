@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import styles from './styles.css';
+import SvgText from '../SvgText';
 
 const NodeGeneric = ({
   id,
@@ -35,19 +36,13 @@ const NodeGeneric = ({
       ref={rectRef}
     />
 
-    <foreignObject x="5" y="0" height="15" width="150">
-      <p
-        title={id}
-        style={{
-          margin: 0,
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-        }}
-      >
-        {id}
-      </p>
-    </foreignObject>
+    <SvgText 
+      x="5"
+      y="15"
+      height="15" 
+      width="150"
+      title={id}
+    />
 
     <path d="M0,20 h160" stroke="#333" />
 
