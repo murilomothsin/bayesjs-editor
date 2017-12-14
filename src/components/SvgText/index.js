@@ -39,8 +39,8 @@ class SvgText extends React.PureComponent {
       <text x={x}
         y={y} 
         ref="element"
-        height={height || 15}
-        width={width || '75'}
+        height={height}
+        width={width}
         title={title}
         style={{
           margin: 0,
@@ -58,8 +58,8 @@ class SvgText extends React.PureComponent {
 SvgText.propTypes = {
   x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   title: PropTypes.string.isRequired,
 };
 
