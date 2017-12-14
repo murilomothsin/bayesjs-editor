@@ -8,7 +8,7 @@ const srcPath = path.join(__dirname, 'src');
 
 module.exports = {
   entry: {
-    app: path.join(srcPath, 'index.js'),
+    app: ['babel-polyfill', path.join(srcPath, 'index.js')],
   },
   output: {
     path: path.join(__dirname, 'dist'),
