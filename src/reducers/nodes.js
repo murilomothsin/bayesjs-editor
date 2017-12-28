@@ -8,7 +8,6 @@ import {
   CHANGE_NODE_ID,
   CHANGE_NODE_STATES,
   CHANGE_NODE_CPT,
-  CHANGE_NODE_DESCRIPTION,
 } from '../actions';
 
 const arrayEqual = (arr1, arr2) => {
@@ -304,11 +303,6 @@ const nodeReducer = (node, action) => {
         ...node,
         cpt: action.payload.cpt,
       };
-    case CHANGE_NODE_DESCRIPTION:
-      return {
-        ...node,
-        description: action.payload.description,
-      };
     default:
       return node;
   }
@@ -349,7 +343,6 @@ export default (state = [], action) => {
     case CHANGE_NODE_ID:
     case CHANGE_NODE_STATES:
     case CHANGE_NODE_CPT:
-    case CHANGE_NODE_DESCRIPTION:
       return state.map(node => nodeReducer(node, action));
     default:
       return state;
