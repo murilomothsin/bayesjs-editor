@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Arrow extends Component {
   makeControlPoint = (point, n = 50) => {
