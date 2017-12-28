@@ -23,13 +23,15 @@ export const getNetworkKind = state => state.network.kind || NETWORK_KINDS.BN;
 export const getPanelVisibility = state => state.network.propertiesPanelVisible;
 export const getLinkages = state => state.network.linkages;
 export const getInferenceEnabled = state => (state.network.inferenceEnabled === undefined ? true : state.network.inferenceEnabled);
+export const getDescriptions = state => state.descriptions || {};
 
 export const getStateToSave = createSelector(
   getNetwork,
   getNodes,
   getPositions,
   getSubnetworks,
-  (network, nodes, positions, subnetworks) => ({
+  getDescriptions,
+  (network, nodes, positions, subnetworks, descriptions) => ({
     version: 2,
     network: {
       ...network,
@@ -42,6 +44,7 @@ export const getStateToSave = createSelector(
     },
     nodes,
     positions,
+    descriptions
   }),
 );
 

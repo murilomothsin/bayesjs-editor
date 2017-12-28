@@ -79,13 +79,15 @@ class Header extends Component {
 
   stateToSave = () => {
     const { stateToSave } = this.props;
+    
     const state = {
       ...stateToSave,
       network: {
         ...stateToSave.network
       },
       nodes: stateToSave.network.nodes || [],
-      positions: stateToSave.network.positions || {}
+      positions: stateToSave.network.positions || {},
+      descriptions: stateToSave.descriptions || {},
     };
 
     if (!state.network.id) {

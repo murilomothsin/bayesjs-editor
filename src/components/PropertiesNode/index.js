@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeNodeId, changeNodeDescription } from '../../actions';
-import { getNodes } from '../../selectors';
+import { getNodes, getDescriptions } from '../../selectors';
 import Button from '../Button';
 import styles from './styles.css';
 
 class PropertiesNode extends Component {
   constructor(props) {
     super(props);
-    const { node } = props;
+    const { node, descriptions } = props;
 
     this.state = {
       inputText: node.id,
-      nodeDescription: node.description || '',
+      nodeDescription: descriptions[node.id] || '',
     };
   }
 
@@ -121,6 +121,7 @@ PropertiesNode.propTypes = {
 
 const mapStateToProps = state => ({
   nodes: getNodes(state),
+  descriptions: getDescriptions(state),
 });
 
 
