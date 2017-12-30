@@ -18,7 +18,7 @@ import {
   redo,
 } from '../../actions';
 
-class App extends Component {
+export class App extends Component {
   state = {
     key: 1,
   };
