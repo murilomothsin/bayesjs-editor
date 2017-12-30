@@ -22,6 +22,7 @@ const NodeGeneric = ({
     onMouseDown={onMouseDown}
     onDoubleClick={onDoubleClick}
     transform={`translate(${x} ${y})`}
+    data-node-id={id}
     style={{
       cursor: (canMove ? 'nove' : 'pointer'),
     }}

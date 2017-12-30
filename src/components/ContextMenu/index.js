@@ -74,7 +74,7 @@ class ContextMenu extends Component {
       const { contextItem } = this;
 
       this.handleWindowMouseDown();
-      item.onClick(contextItem);
+      item.onClick(contextItem, e);
     }
   };
 

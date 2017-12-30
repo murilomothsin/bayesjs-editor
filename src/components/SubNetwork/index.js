@@ -5,6 +5,7 @@ import Network, { ContextMenuType } from '../Network';
 import Arrow from '../Arrow';
 import Node from '../Node';
 import NodeGeneric from '../NodeGeneric';
+import { calcNodeHeight } from '../../utils/index';
 
 class SubNetwork extends Component {
   constructor(props) {
@@ -105,7 +106,10 @@ class SubNetwork extends Component {
 
   renderNode = (node, props) => {
     const {
-      connectingNode, network, inferenceResults, networkColor,
+      connectingNode, 
+      network, 
+      inferenceResults, 
+      networkColor,
     } = this.props;
     const key = `${network.name}-${node.id}`;
 
@@ -120,7 +124,7 @@ class SubNetwork extends Component {
           y="5"
           id={name}
           selected
-          sumHeight={17}
+          height={calcNodeHeight([], 17)}
           stroke={color}
           onMouseDown={() => {}}
           rectRef={ref => (this.connectingNodeRef = ref)}
