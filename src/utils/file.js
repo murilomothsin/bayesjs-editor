@@ -1,6 +1,6 @@
 import fileDownload from 'react-file-download';
 
-export const openFile = (document, accept, cb) => {
+export const openFile = (document, accept, callback) => {
   const element = document.createElement('input');
 
   element.setAttribute('type', 'file');
@@ -12,7 +12,7 @@ export const openFile = (document, accept, cb) => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      cb(reader.result);
+      callback(reader.result);
     };
 
     reader.onerror = (error) => {
