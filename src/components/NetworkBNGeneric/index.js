@@ -69,7 +69,6 @@ class NetworkBNGeneric extends Component {
       network.selectedNodes.map((nodeId) => {
         this.props.dispatch(removeNode(nodeId));
       });
-      setTimeout(() => this.calculateArrows(), 0);
     }
   }
 
@@ -98,18 +97,6 @@ class NetworkBNGeneric extends Component {
 
   changeNodePosition = (id, newX, newY) => {
     this.props.dispatch(changeNodePosition(id, newX, newY));
-    setTimeout(this.net.renderArrows, 0);
-  };
-
-  calculateArrows = () => {
-    this.net.renderArrows();
-  };
-
-  handleRequestRedraw = () => {
-    setTimeout(() => {
-      this.calculateArrows();
-      this.setState({ key: this.state.key + 1 });
-    }, 0);
   };
 
   getContextItems = (type) => {

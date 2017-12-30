@@ -152,8 +152,6 @@ class NetworkMSBN extends Component {
     }
 
     dispatch(removeSuperNode(id));
-
-    setTimeout(this.calculateArrows.bind(this), 0);
   };
 
   onRemoveArrow = (arrow) => {
@@ -163,8 +161,6 @@ class NetworkMSBN extends Component {
     for (const id of linkagesIds) {
       dispatch(removeLinkage(id));
     }
-
-    setTimeout(this.calculateArrows.bind(this), 0);
   };
 
   getArrowTitle = ({ info }) => {
@@ -322,18 +318,6 @@ class NetworkMSBN extends Component {
 
   changeNodePosition = (id, newX, newY) => {
     this.props.dispatch(changeNodePosition(id, newX, newY));
-    setTimeout(this.calculateArrows.bind(this), 0);
-  };
-
-  calculateArrows = () => {
-    this.net.renderArrows();
-  };
-
-  handleRequestRedraw = () => {
-    setTimeout(() => {
-      this.calculateArrows();
-      this.setState({ key: this.state.key + 1 });
-    }, 0);
   };
 
   getContextItems = (type) => {
@@ -412,7 +396,6 @@ class NetworkMSBN extends Component {
         alert('Essa união irá resultar em uma rede ciclica, ou seja, uma rede circular. Sua ação não será completada.');
       } else {
         this.props.dispatch(addLinkage(linkage));
-        setTimeout(this.calculateArrows.bind(this), 0);
       }
 
       this.cancelConnection();
@@ -458,7 +441,6 @@ class NetworkMSBN extends Component {
         alert('Essa união irá resultar em uma rede ciclica, ou seja, uma rede circular. Sua ação não será completada.');
       } else {
         this.props.dispatch(addLinkage(linkage));
-        setTimeout(this.calculateArrows.bind(this), 0);
       }
 
       this.cancelConnection();
@@ -627,7 +609,6 @@ class NetworkMSBN extends Component {
             }
 
             this.setState({ editingLinkages: null });
-            setTimeout(this.calculateArrows.bind(this), 0);
           }}
         />
       );

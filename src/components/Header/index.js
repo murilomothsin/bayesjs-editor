@@ -36,7 +36,6 @@ class Header extends Component {
     e.preventDefault();
     if (confirm('Os dados da rede atual serão perdidos. Deseja continuar?')) {
       this.props.dispatch(newNetwork());
-      this.props.onRequestRedraw();
     }
   };
 
@@ -44,7 +43,6 @@ class Header extends Component {
     e.preventDefault();
     if (confirm('Os dados da rede atual serão perdidos. Deseja continuar?')) {
       this.props.dispatch(newNetwork(NETWORK_KINDS.MSBN));
-      this.props.onRequestRedraw();
     }
   }
 
@@ -55,7 +53,7 @@ class Header extends Component {
         const state = JSON.parse(json);
 
         this.props.dispatch(loadNetwork(state));
-        this.props.onRequestRedraw();
+
       } catch (ex) {
         console.warn(ex);
         alert('Arquivo inválido');
@@ -150,7 +148,6 @@ class Header extends Component {
 
 Header.propTypes = {
   stateToSave: PropTypes.object.isRequired,
-  onRequestRedraw: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

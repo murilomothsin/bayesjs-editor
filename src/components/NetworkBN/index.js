@@ -71,7 +71,6 @@ class NetworkBN extends Component {
         style: { color: '#C62828' },
         onClick: (contextMenuNode) => {
           this.props.dispatch(removeNode(contextMenuNode.id));
-          setTimeout(() => this.calculateArrows(), 0);
         },
       },
     ];
@@ -84,7 +83,6 @@ class NetworkBN extends Component {
         onClick: (contextMenuArrow) => {
           const { childId, parentId } = contextMenuArrow;
           this.props.dispatch(removeParent(childId, parentId));
-          setTimeout(() => this.calculateArrows(), 0);
         },
       },
     ];
@@ -142,7 +140,6 @@ class NetworkBN extends Component {
       network.selectedNodes.map((nodeId) => {
         this.props.dispatch(removeNode(nodeId));
       });
-      setTimeout(() => this.calculateArrows(), 0);
     }
   }
 
@@ -171,18 +168,6 @@ class NetworkBN extends Component {
 
   changeNodePosition = (id, newX, newY) => {
     this.props.dispatch(changeNodePosition(id, newX, newY));
-    setTimeout(this.net.renderArrows, 0);
-  };
-
-  calculateArrows = () => {
-    this.net.renderArrows();
-  };
-
-  handleRequestRedraw = () => {
-    setTimeout(() => {
-      this.calculateArrows();
-      this.setState({ key: this.state.key + 1 });
-    }, 0);
   };
 
   getContextItems = (type) => {
@@ -238,7 +223,6 @@ class NetworkBN extends Component {
           node={this.state.editingNodeStates}
           onRequestClose={() => {
             this.setState({ editingNodeStates: null });
-            this.handleRequestRedraw();
           }}
         />
 

@@ -40,10 +40,6 @@ class Canvas extends Component {
     this.nodeToAddChildTo = null;
   }
 
-  componentDidMount() {
-    // this.calculateArrows();
-  }
-
   renderDefs = () => (
     <defs>
       <marker
@@ -59,10 +55,6 @@ class Canvas extends Component {
       </marker>
     </defs>
   );
-
-  calculateArrows = () => {
-    this.net.getWrappedInstance().calculateArrows();
-  };
 
   onEditNodeStates = (node) => {
     this.net.getWrappedInstance().onEditNodeStates(node);

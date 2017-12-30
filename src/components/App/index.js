@@ -23,8 +23,6 @@ class App extends Component {
     key: 1,
   };
 
-  getCanvas = () => this.canvas.getWrappedInstance();
-
   componentDidMount() {
     window.addEventListener('keyup', this.keyupHandler);
   }
@@ -47,13 +45,6 @@ class App extends Component {
     }
   };
 
-  handleRequestRedraw = () => {
-    setTimeout(() => {
-      this.getCanvas().calculateArrows();
-      this.setState({ key: this.state.key + 1 });
-    }, 0);
-  };
-
   getPanel = () => (
     <PropertiesPanel
       key={this.state.key}
@@ -68,7 +59,7 @@ class App extends Component {
   render() {
     return (
       <div className={styles.app}>
-        <Header onRequestRedraw={this.handleRequestRedraw} />
+        <Header />
 
         <div className={styles.container}>
           <Canvas

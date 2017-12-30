@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import styles from './styles.css';
 import ContextMenu from '../ContextMenu';
 import AddNodeModal from '../AddNodeModal';
-import Arrows from '../Arrows';
 import { v4 } from 'uuid';
 import { find } from 'lodash';
-import $ from 'jquery'
+import $ from 'jquery';
+import ArrowList from '../ArrowList';
+import ArrowDefs from '../ArrowDefs';
 
 export const ContextMenuType = {
   NODE: 'CONTEXT_MENU_NODE',
@@ -41,10 +42,6 @@ class Network extends Component {
     this.onMouseMoveProps = typeof this.props.onMouseMove === 'function' ? this.props.onMouseMove : () => {};
   }
 
-  componentDidMount() {
-    this.renderArrows();
-  }
-
   startConnection = (nodeToAddChildTo) => {
     const { id, name } = nodeToAddChildTo
     const nodeId = (name || id);
@@ -66,139 +63,8 @@ class Network extends Component {
     }
   };
 
-  calculateArrows = (nodes = this.props.nodes) => {
-    const getNodeLinksPositions = (node) => {
-      const { width, height } = calcNodeWidthHeight(node)
-
-      const top = {
-        x: (node.position.x + width / 2),
-        y: node.position.y,
-        type: 'top',
-      };
-
-      const right = {
-        x: node.position.x + width,
-        y: (node.position.y + height / 2),
-        type: 'right',
-      };
-
-      const bottom = {
-        x: (node.position.x + width / 2),
-        y: node.position.y + height,
-        type: 'bottom',
-      };
-
-      const left = {
-        x: node.position.x,
-        y: (node.position.y + height / 2),
-        type: 'left',
-      };
-
-      return [top, right, bottom, left];
-    };
-
-    const getDistance = (p1, p2) => (
-      Math.sqrt((Math.abs(p2.x - p1.x) ** 2) + (Math.abs(p2.y - p1.y) ** 2))
-    );
-
-    const corretion = (p, value) => {
-      if (['top', 'bottom'].indexOf(p.type) !== -1) {
-        p.x += value;
-      } else {
-        p.y += value;
-      }
-    };
-
-    const getNearestPoints = (node1, node2) => {
-      const ps1 = getNodeLinksPositions(node1);
-      const ps2 = getNodeLinksPositions(node2);
-
-      let p1 = ps1[0];
-      let p2 = ps2[0];
-
-      for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-          if (getDistance(p1, p2) > getDistance(ps1[i], ps2[j])) {
-            p1 = ps1[i];
-            p2 = ps2[j];
-          }
-        }
-      }
-
-      // corretion(p1, -10);
-      // corretion(p2, 10);
-
-      return { p1, p2 };
-    };
-
-    const pointCountArray = [];
-
-    const getPointCount = (point) => {
-      let pointCount = pointCountArray
-        .find(x => x.point.x === point.x && x.point.y === point.y);
-
-      if (pointCount !== undefined) {
-        pointCount.count++;
-      } else {
-        pointCount = {
-          point,
-          count: 1,
-        };
-
-        pointCountArray.push(pointCount);
-      }
-
-      return pointCount.count;
-    };
-
-    const getPointAdjustment = (count) => {
-      let adjustment = count - 1;
-
-      if (adjustment % 2 === 1) {
-        adjustment *= -1;
-        adjustment -= 1;
-      }
-
-      adjustment /= 2;
-
-      return adjustment * 12;
-    };
-
-    const adjustPoint = (point, adjustment) => {
-      if (point.type === 'top' || point.type === 'bottom') {
-        point.x += adjustment;
-      } else {
-        point.y += adjustment;
-      }
-    };
-
-    const arrows = this.props.arrows().map((arrow, index) => {
-      const { from, to } = arrow;
-      const points = getNearestPoints(from, to);
-      // const pointsFrom = map.get(from.id) || [];
-      // const seila = map.get(from.id) || [];
-
-      // const p1Adjustment = getPointAdjustment(getPointCount(points.p1));
-      // const p2Adjustment = getPointAdjustment(getPointCount(points.p2));
-
-      // adjustPoint(points.p1, p1Adjustment);
-      // adjustPoint(points.p2, p2Adjustment);
-
-      return {
-        key: `${from.id}-${to.id}`,
-        from: points.p1,
-        to: points.p2,
-        parentId: from.id,
-        childId: to.id,
-        arrow,
-        index,
-      };
-    });
-
-    return arrows;
-  };
-
   handleArrowMouseDown = (arrow, e) => {
+    
     if (e.button === 2) {
       e.stopPropagation();
 
@@ -229,7 +95,6 @@ class Network extends Component {
           nodeToAddChildTo: null,
           nodeToAddChildToBounds: null,
         });
-        setTimeout(() => this.calculateArrows(), 0);
       }
 
       this.movingNode = {
@@ -352,8 +217,6 @@ class Network extends Component {
 
       if (this.canChangeNodePostion) {
         changeNodePosition(id, newX, newY);
-
-        setTimeout(() => this.calculateArrows(), 0);
       } else {
         console.warn('changeNodePosition not defined in the props of Network');
       }
@@ -377,53 +240,6 @@ class Network extends Component {
         nodeToAddChildToBounds: null,
       });
     }
-  };
-
-  renderDefs = () => (
-    <defs>
-      <marker
-        id="triangle"
-        viewBox="0 0 10 10"
-        markerWidth="6"
-        markerHeight="6"
-        refX="8"
-        refY="5"
-        orient="auto"
-      >
-        <path d="M0,0 L10,5 L0,10" fill="#333" />
-      </marker>
-
-      <marker
-        id="triangle-hover"
-        viewBox="0 0 10 10"
-        markerWidth="6"
-        markerHeight="6"
-        refX="8"
-        refY="5"
-        orient="auto"
-      >
-        <path d="M0,0 L10,5 L0,10" fill="#9f9ff6" />
-      </marker>
-    </defs>
-  );
-
-  renderArrows = () => {
-    const { onClickArrow, nodes, renderArrow } = this.props;
-    const arrowsCalc = this.calculateArrows(nodes);
-    const clickIsFunc = onClickArrow === 'function';
-    const arrows = arrowsCalc.map((a) => {
-      const onMouseDown = e => this.handleArrowMouseDown(a, e);
-      const uuid = v4();
-      const onClick = (e) => {
-        if (clickIsFunc) {
-          onClickArrow(a, e);
-        }
-      };
-
-      return renderArrow(a, { onMouseDown, onClick });
-    });
-
-    this.setState({ arrows });
   };
 
   renderNodes = () => {
@@ -493,7 +309,11 @@ class Network extends Component {
           ref={ref => (this.canvas = ref)}
         >
           <g>
-            <Arrows arrows={this.state.arrows} />
+            <ArrowDefs />
+            <ArrowList 
+              renderArrow={this.props.renderArrow}
+              list={this.props.arrows}
+              onMouseDown={this.handleArrowMouseDown} />
           </g>
           <g>
             {this.renderNodes()}
