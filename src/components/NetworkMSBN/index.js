@@ -227,8 +227,8 @@ class NetworkMSBN extends Component {
   handleKeyup = (e) => {
     const key = e.keyCode || e.which;
     const { network, nodes } = this.props;
-    
-    if ([8, 46].indexOf(key) !== -1 && network.selectedNodes.length > 0 && document.activeElement.tagName === "BODY") {
+
+    if ([8, 46].indexOf(key) !== -1 && network.selectedNodes.length > 0 && document.activeElement.tagName === 'BODY') {
       network.selectedNodes.map((nodeId) => {
         const node = nodes.find(({ id }) => id == nodeId);
 
@@ -288,7 +288,7 @@ class NetworkMSBN extends Component {
   }
 
   requestCreateNode = (position, onRequestClose) => {
-    openFile('.json', (json) => {
+    openFile(document, '.json', (json) => {
       // try {
       const state = JSON.parse(json);
 

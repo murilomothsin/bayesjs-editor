@@ -43,13 +43,13 @@ class Network extends Component {
   }
 
   startConnection = (nodeToAddChildTo) => {
-    const { id, name } = nodeToAddChildTo
+    const { id, name } = nodeToAddChildTo;
     const nodeId = (name || id);
     const domList = $(`[data-node-id="${nodeId}"]`);
     const dom = domList.get(0);
-    const bounds = dom.getBoundingClientRect()
-    
-    this.setState({ 
+    const bounds = dom.getBoundingClientRect();
+
+    this.setState({
       nodeToAddChildTo,
       nodeToAddChildToBounds: bounds,
     });
@@ -64,7 +64,6 @@ class Network extends Component {
   };
 
   handleArrowMouseDown = (arrow, e) => {
-    
     if (e.button === 2) {
       e.stopPropagation();
 
@@ -90,8 +89,8 @@ class Network extends Component {
 
       if (this.state.nodeToAddChildTo !== null) {
         onAddConnection(node.id, this.state.nodeToAddChildTo.id);
-        this.setState({ 
-          addingChildArrow: null, 
+        this.setState({
+          addingChildArrow: null,
           nodeToAddChildTo: null,
           nodeToAddChildToBounds: null,
         });
@@ -123,8 +122,8 @@ class Network extends Component {
 
     if (this.state.nodeToAddChildTo !== null) {
       this.props.onCancelConnection();
-      this.setState({ 
-        addingChildArrow: null, 
+      this.setState({
+        addingChildArrow: null,
         nodeToAddChildTo: null,
         nodeToAddChildToBounds: null,
       });
@@ -145,10 +144,10 @@ class Network extends Component {
     this.onMouseMoveProps(e);
 
     if (this.canChangeNodePostion && this.movingNode !== null) {
-      const { nodes } = this.props
+      const { nodes } = this.props;
       const { id, initialPosition, initialMousePosition } = this.movingNode;
-      const node = find(nodes, node => node.id === id)
-      const { width, height } = calcNodeWidthHeight(node)
+      const node = find(nodes, node => node.id === id);
+      const { width, height } = calcNodeWidthHeight(node);
       const difX = e.clientX - initialMousePosition.x;
       const difY = e.clientY - initialMousePosition.y;
 
@@ -165,23 +164,25 @@ class Network extends Component {
     this.handleNodeToAddChildTo(e);
   };
 
-  findNodeReact = target => {
+  findNodeReact = (target) => {
     const e = $(target);
-    debugger
-    const node = e.closest('[data-node]')
 
-    console.log(node)
+    const node = e.closest('[data-node]');
+
+    console.log(node);
   }
 
   handleNodeToAddChildTo = (e) => {
-    const { 
+    const {
       nodeToAddChildTo,
       nodeToAddChildToBounds,
-    } = this.state
+    } = this.state;
 
     if (nodeToAddChildTo !== null) {
       const canvasRect = this.canvas.getBoundingClientRect();
-      const { left, top, width, height } = nodeToAddChildToBounds;
+      const {
+        left, top, width, height,
+      } = nodeToAddChildToBounds;
 
       const from = {
         x: left + (width / 2) - canvasRect.left,
@@ -234,8 +235,8 @@ class Network extends Component {
 
     if (this.state.nodeToAddChildTo !== null) {
       this.props.onCancelConnection();
-      this.setState({ 
-        addingChildArrow: null, 
+      this.setState({
+        addingChildArrow: null,
         nodeToAddChildTo: null,
         nodeToAddChildToBounds: null,
       });
@@ -310,10 +311,11 @@ class Network extends Component {
         >
           <g>
             <ArrowDefs />
-            <ArrowList 
+            <ArrowList
               renderArrow={this.props.renderArrow}
               list={this.props.arrows}
-              onMouseDown={this.handleArrowMouseDown} />
+              onMouseDown={this.handleArrowMouseDown}
+            />
           </g>
           <g>
             {this.renderNodes()}

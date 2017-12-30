@@ -1,6 +1,6 @@
 import { PERSIST_STATE } from '../actions';
 import { getStateToSave } from '../selectors';
-import { isUndefined } from 'lodash'
+import { isUndefined } from 'lodash';
 
 export const persistState = store => next => (action) => {
   if (action.type !== PERSIST_STATE) {
@@ -15,32 +15,32 @@ export const persistState = store => next => (action) => {
   return undefined;
 };
 
-const migrateDescriptions = state => {
-  const { network, descriptions } = state
-  const { nodes } = network
-  const currentDescriptions = descriptions || {}
+const migrateDescriptions = (state) => {
+  const { network, descriptions } = state;
+  const { nodes } = network;
+  const currentDescriptions = descriptions || {};
   const filtredNodes = nodes
-    .filter(({ description }) => !isUndefined(description))
+    .filter(({ description }) => !isUndefined(description));
 
   const mergedDescriptions = filtredNodes
     .reduce((acc, { id, description }) => ({
       ...acc,
-      [id]: description
-    }), currentDescriptions)
+      [id]: description,
+    }), currentDescriptions);
 
   for (const node of filtredNodes) {
-    delete node.description
+    delete node.description;
   }
 
   return {
     ...state,
-    descriptions: mergedDescriptions
-  }
-}
+    descriptions: mergedDescriptions,
+  };
+};
 
-const migrations = state => 
-  [ migrateDescriptions ]
-    .reduce((cState, migration) => migration(cState), state)
+const migrations = state =>
+  [migrateDescriptions]
+    .reduce((cState, migration) => migration(cState), state);
 
 export const loadState = () => {
   const serializedState = localStorage.getItem('state');

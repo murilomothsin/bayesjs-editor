@@ -1,2 +1,2 @@
-export const isSubnetwork = node => 
-  node.kind === "BN"
+export const isSubnetwork = node =>
+  node.kind === 'BN';

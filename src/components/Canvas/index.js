@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import AddNodeModal from '../AddNodeModal';
 import Node from '../Node';
 import styles from './styles.css';
-import { openFile } from '../../utils/file';
 import NetworkBN from '../NetworkBN';
 import NetworkMSBN from '../NetworkMSBN';
 

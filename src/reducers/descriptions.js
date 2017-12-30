@@ -1,17 +1,17 @@
-import { 
+import {
   CHANGE_NODE_DESCRIPTION,
-} from "../actions/index";
+} from '../actions/index';
 
-const INITAL_STATE = {}
+const INITAL_STATE = {};
 
 export default (state = INITAL_STATE, action) => {
   switch (action.type) {
     case CHANGE_NODE_DESCRIPTION:
-      const { id, description } = action.payload
+      const { id, description } = action.payload;
 
       return {
         ...state,
-        [id]: description
+        [id]: description,
       };
     default:
       return state;

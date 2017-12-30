@@ -106,9 +106,9 @@ class SubNetwork extends Component {
 
   renderNode = (node, props) => {
     const {
-      connectingNode, 
-      network, 
-      inferenceResults, 
+      connectingNode,
+      network,
+      inferenceResults,
       networkColor,
     } = this.props;
     const key = `${network.name}-${node.id}`;

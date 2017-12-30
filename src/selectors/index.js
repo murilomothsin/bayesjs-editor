@@ -44,7 +44,7 @@ export const getStateToSave = createSelector(
     },
     nodes,
     positions,
-    descriptions
+    descriptions,
   }),
 );
 

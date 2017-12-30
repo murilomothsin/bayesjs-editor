@@ -48,12 +48,12 @@ class Header extends Component {
 
   handleOpenNetworkClick = (e) => {
     e.preventDefault();
-    openFile('.json', (json) => {
+
+    openFile(document, '.json', (json) => {
       try {
         const state = JSON.parse(json);
 
         this.props.dispatch(loadNetwork(state));
-
       } catch (ex) {
         console.warn(ex);
         alert('Arquivo inválido');
@@ -77,11 +77,11 @@ class Header extends Component {
 
   stateToSave = () => {
     const { stateToSave } = this.props;
-    
+
     const state = {
       ...stateToSave,
       network: {
-        ...stateToSave.network
+        ...stateToSave.network,
       },
       nodes: stateToSave.network.nodes || [],
       positions: stateToSave.network.positions || {},

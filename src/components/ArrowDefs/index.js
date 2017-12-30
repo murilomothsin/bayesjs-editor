@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class ArrowDefs extends Component {
   shouldComponentUpdate() {
@@ -33,8 +33,8 @@ class ArrowDefs extends Component {
           <path d="M0,0 L10,5 L0,10" fill="#333" />
         </marker>
       </defs>
-    )
+    );
   }
 }
 
-export default ArrowDefs
+export default ArrowDefs;

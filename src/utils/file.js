@@ -1,6 +1,6 @@
 import fileDownload from 'react-file-download';
 
-export const openFile = (accept, cb) => {
+export const openFile = (document, accept, cb) => {
   const element = document.createElement('input');
 
   element.setAttribute('type', 'file');
@@ -15,8 +15,8 @@ export const openFile = (accept, cb) => {
       cb(reader.result);
     };
 
-    reader.onerror = (e) => {
-      console.warn('Error on open file :', e);
+    reader.onerror = (error) => {
+      console.warn('Error on open file :', error);
     };
 
     reader.readAsText(file);
