@@ -23,6 +23,8 @@ export class App extends Component {
     key: 1,
   };
 
+  getCanvas = () => this.canvas.getWrappedInstance();
+  
   componentDidMount() {
     window.addEventListener('keyup', this.keyupHandler);
   }
