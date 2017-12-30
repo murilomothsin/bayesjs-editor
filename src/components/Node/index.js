@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NodeGeneric from '../NodeGeneric';
 import NodeState from '../NodeState';
+import { calcNodeHeight } from '../../utils/index';
 
 const Node = (props) => {
   const {
@@ -10,7 +11,7 @@ const Node = (props) => {
 
   const propsGeneric = {
     ...props,
-    sumHeight: (18 * states.length) + (sumHeight || 0),
+    height: calcNodeHeight(states, sumHeight),
   };
 
   const renderState = (state, index) => {

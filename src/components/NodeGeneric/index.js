@@ -6,7 +6,7 @@ const NodeGeneric = ({
   id,
   x,
   y,
-  sumHeight,
+  height,
   selected,
   onMouseDown,
   rectRef,
@@ -27,7 +27,7 @@ const NodeGeneric = ({
     }}
   >
     <rect
-      height={25 + (sumHeight || 0)}
+      height={height}
       width="160"
       fill={stroke || '#ff8'}
       fillOpacity={opacity || '1'}
@@ -60,6 +60,7 @@ NodeGeneric.propTypes = {
   id: PropTypes.string.isRequired,
   x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  height: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
   onMouseDown: PropTypes.func.isRequired,
   rectRef: PropTypes.func.isRequired,

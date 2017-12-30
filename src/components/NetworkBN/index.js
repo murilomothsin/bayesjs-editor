@@ -111,7 +111,6 @@ class NetworkBN extends Component {
       key={arrow.key}
       from={arrow.from}
       to={arrow.to}
-      markEnd
       {...props}
     />
   );
