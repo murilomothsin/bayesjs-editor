@@ -47,9 +47,8 @@ class Network extends Component {
 
   startConnection = (nodeToAddChildTo) => {
     const { id, name } = nodeToAddChildTo
-    const idd = (name || id);
-    console.log({ idd })
-    const domList = $(`[data-node-id="${idd}"]`);
+    const nodeId = (name || id);
+    const domList = $(`[data-node-id="${nodeId}"]`);
     const dom = domList.get(0);
     const bounds = dom.getBoundingClientRect()
     
