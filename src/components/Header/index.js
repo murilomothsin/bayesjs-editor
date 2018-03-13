@@ -6,6 +6,7 @@ import { openFile, saveFile } from '../../utils/file';
 import Button from '../Button';
 import { v4 } from 'uuid';
 import styles from './styles.css';
+import { convert } from 'bayesjs-converter';
 
 class Header extends Component {
   state = {
@@ -50,7 +51,22 @@ class Header extends Component {
     openFile('.json', (json) => {
       try {
         const state = JSON.parse(json);
-        
+
+        this.props.dispatch(loadNetwork(state));
+        this.props.onRequestRedraw();
+      } catch (ex) {
+        console.warn(ex);
+        alert('Arquivo inválido');
+      }
+    });
+  };
+
+  handleOpenNetFileClick = (e) => {
+    e.preventDefault();
+    openFile('.net', (content) => {
+      try {
+        const state = convert(content)
+
         this.props.dispatch(loadNetwork(state));
         this.props.onRequestRedraw();
       } catch (ex) {
@@ -139,6 +155,9 @@ class Header extends Component {
             </li>
             <li>
               <a href="" onClick={this.handleSaveNetworkClick}>Salvar Rede</a>
+            </li>
+            <li>
+              <a href="" onClick={this.handleOpenNetFileClick}>Abrir arquivo .net</a>
             </li>
           </ul>
         )}

@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "bayesjs": "^0.4.0-beta.5",
+    "bayesjs-converter": "0.0.1",
     "classnames": "^2.2.5",
     "font-awesome": "^4.6.3",
     "normalize.css": "^4.2.0",
